@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Horiversum TechTree Tech Uploader - Options</title>
+    <link rel="stylesheet" type="text/css" href="options.css">
+</head>
+<body>
+<script src="wsse.js"></script>
+<script src="options.js"></script>
+<h1 id="tt_title"></h1>
+<div class="container">
+    <div class="label"><label for="tt_url" id="tt_url_label">Benutzername:</label></div>
+    <div class="input"><input type="text" id="tt_url"></div>
+</div>
+<div class="container">
+    <div class="label"><label for="tt_user" id="tt_user_label">Benutzername:</label></div>
+    <div class="input"><input type="text" id="tt_user"></div>
+</div>
+<div class="container">
+    <div class="label"><label for="tt_pass" id="tt_pass_label">Passwort:</label></div>
+    <div class="input"><input type="password" id="tt_pass"></div>
+</div>
+<div class="container">
+    <div class="label">Planeten:</div>
+    <div class="input planet-list" id="planets"></div>
+</div>
+<div class="container">
+    <div class="label"></div>
+    <div class="input"><button id="save">Speichern</button></div>
+</div>
+<div class="container">
+    <div class="label"></div>
+    <div class="input"><span id="status"></span></div>
+</div>
+
+<template id="planet-template">
+    <div class="planet-row">
+        <div class="planet coordinates">
+            <span class="galaxy"></span>:<span class="system"></span>:<span class="position"></span>
+        </div>
+        <div class="planet name"></div>
+    </div>
+</template>
+</body>
+</html>

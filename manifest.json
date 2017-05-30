@@ -1,0 +1,72 @@
+{
+  "manifest_version": 2,
+  "name": "__MSG_AppName__",
+  "description": "__MSG_AppDescription__",
+  "version": "1.0",
+  "permissions": [
+    "activeTab",
+    "http://techtree.kyoya.de/*",
+    "http://techtree.vm/*",
+    "https://techtree.vm/*",
+    "storage",
+    "tabs",
+    "declarativeContent"
+  ],
+  "background": {
+    "scripts": [
+      "background.js"
+    ]
+  },
+  "content_scripts": [
+    {
+      "matches": [
+        "http://horiversum.org/game/main/main.php?*cmd=start*"
+      ],
+      "js": [
+        "content_planets.js"
+      ],
+      "css": [
+        "content.css"
+      ]
+    },
+    {
+      "matches": [
+        "http://horiversum.org/game/main/main.php?*cmd=building*",
+        "http://horiversum.org/game/main/main.php?*cmd=research*"
+      ],
+      "js": [
+        "content_building_research.js"
+      ],
+      "css": [
+        "content.css"
+      ]
+    },
+    {
+      "matches": [
+        "http://horiversum.org/game/stat/stat_main.php?cmd=check&*"
+      ],
+      "all_frames": true,
+      "js": [
+        "content_check.js"
+      ],
+      "css": [
+        "content.css"
+      ]
+    }
+  ],
+  "options_page": "options.html",
+  "page_action": {
+    "default_icon": {
+      "16":"icon_active/res/mipmap-hdpi/icon_active.png",
+      "32":"icon_active/res/mipmap-hdpi/icon_active.png",
+      "48":"icon_active/res/mipmap-hdpi/icon_active.png"
+    },
+    "default_popup": "popup.html",
+    "default_title": "__MSG_AppName__"
+  },
+  "icons" : {
+    "48" : "icon_active/res/mipmap-hdpi/icon_active.png",
+    "128" : "icon_active/res/mipmap-hdpi/icon_active.png"
+  },
+  "default_locale": "de"
+}

@@ -1,0 +1,51 @@
+body {
+    background: linear-gradient(to bottom,  rgba(255,255,255,1) 0%,rgba(246,246,246,1) 47%,rgba(237,237,237,1) 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+    font-family: sans-serif;
+    font-size: 14px;
+    height: 100vh;
+    margin: 0;
+    padding: 15px;
+    box-sizing: border-box;
+}
+.container {
+    display:flex;
+    justify-content: flex-start;
+    align-items: center;
+    flex-wrap: wrap;
+    margin: -5px;
+}
+.label, .input {
+    padding: 5px;
+}
+.label {
+    flex: 0 0 135px;
+}
+.input {
+    flex: 1 1 250px;
+}
+#status {
+    font-weight: 600;
+}
+#status.success {
+    color:#040;
+}
+.planet-list {
+    padding: 10px 0;
+}
+.planet-row {
+    display: flex;
+    margin: -5px;
+    align-items: center;
+}
+.planet {
+    padding: 5px;
+}
+.planet.name {
+    flex: 1 1 50px;
+}
+.planet.coordinates {
+    flex: 0 0 50px;
+}
+.planet.action {
+    flex: 0 0 15px;
+}

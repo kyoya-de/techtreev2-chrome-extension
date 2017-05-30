@@ -1,0 +1,26 @@
+{
+  "AppName": {
+    "message": "Horiversum TechTree Uploader"
+  },
+  "AppDescription": {
+    "message": "Diese Extension vereinfacht die Aktualisierung des Horiversum TechTrees."
+  },
+  "LabelURL": {
+    "message":"URL zum TechTree"
+  },
+  "LabelUsername": {
+    "message": "Benutzername"
+  },
+  "LabelPassword": {
+    "message": "Passwort"
+  },
+  "LabelSave": {
+    "message": "Speichern"
+  },
+  "TitleOptions": {
+    "message": "Optionen"
+  },
+  "LabelUploadToTree": {
+    "message": "Zum TechTree hochladen"
+  }
+}
