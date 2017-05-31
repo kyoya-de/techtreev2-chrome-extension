@@ -9,8 +9,7 @@
     "http://techtree.vm/*",
     "https://techtree.vm/*",
     "storage",
-    "tabs",
-    "declarativeContent"
+    "tabs"
   ],
   "background": {
     "scripts": [
@@ -54,7 +53,9 @@
       ]
     }
   ],
-  "options_page": "options.html",
+  "options_ui": {
+    "page":"options.html"
+  },
   "page_action": {
     "default_icon": {
       "16":"icon_active/res/mipmap-hdpi/icon_active.png",

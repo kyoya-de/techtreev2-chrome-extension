@@ -4,7 +4,7 @@ function TTUpload() {
 
 TTUpload.prototype.upload = function (content) {
     "use strict";
-    browser.storage.local.get({"url":"", "user": "", "pass": ""}, function (items) {
+    browserCompat.storage.local.get({"url":"", "user": "", "pass": ""}, function (items) {
         "use strict";
         let header,
             xhr = new XMLHttpRequest();
@@ -36,7 +36,7 @@ TTUpload.prototype.upload = function (content) {
 
 TTUpload.prototype.loadPlanets = function () {
     "use strict";
-    browser.storage.local.get({"url": "http://techtree.vm/api/", "user": "", "pass": ""}, function (items) {
+    browserCompat.storage.local.get({"url": "http://techtree.vm/api/", "user": "", "pass": ""}, function (items) {
         "use strict";
         let header,
             xhr = new XMLHttpRequest();
@@ -77,9 +77,9 @@ document.addEventListener('DOMContentLoaded', function () {
 
     document.querySelector('#upload').addEventListener('click', function() {
         "use strict";
-        browser.tabs.query({active: true, currentWindow: true}, function(tabs) {
+        browserCompat.tabs.query({active: true, currentWindow: true}, function(tabs) {
             "use strict";
-            browser.tabs.sendMessage(tabs[0].id, {}, function(response) {
+            browserCompat.tabs.sendMessage(tabs[0].id, {}, function(response) {
                 "use strict";
                 ttUploader.upload(response);
             });
