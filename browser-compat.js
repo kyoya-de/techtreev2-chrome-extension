@@ -8,12 +8,12 @@ let TabsWrapper = (function() {
 
     TabsWrapper.prototype.query = function(queryInfo, callback) {
         "use strict";
-        this.tabs.query(queryInfo).then(callback);
+        this.tabs.query(queryInfo).then(callback).catch(e => console.error(e));
     };
 
     TabsWrapper.prototype.sendMessage = function(tabId, message, options, responseCallback) {
         "use strict";
-        this.tabs.sendMessage(tabId, message, options).then(responseCallback);
+        this.tabs.sendMessage(tabId, message, options).then(responseCallback).catch(e => console.error(e));
     };
 
     return TabsWrapper;
@@ -29,12 +29,12 @@ let StorageWrapper = (function () {
 
     StorageWrapper.prototype.get = function(keys, callback) {
         "use strict";
-        this.storage.get(keys).then(callback);
+        this.storage.get(keys).then(callback).catch(e => console.error(e));
     };
 
     StorageWrapper.prototype.set = function(items, callback) {
         "use strict";
-        this.storage.set(items).then(callback);
+        this.storage.set(items).then(callback).catch(e => console.error(e));
     };
 
     return StorageWrapper;
@@ -48,7 +48,7 @@ let BrowserCompat = (function() {
     {
         "use strict";
         this.compatMode = (!!window.navigator.userAgent.match(/Chrome\/\d/)) ? MODE_CHROME : MODE_FIREFOX;
-        this.browser = window.chrome;
+        this.browser = (this.compatMode === MODE_FIREFOX) ? window.browser : window.chrome;
         this.tabs = this.browser.tabs;
         this.storage = this.browser.storage;
 

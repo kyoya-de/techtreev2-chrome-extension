@@ -15,10 +15,10 @@ let TTSettings = (function() {
         this.passInput = document.querySelector('#tt_pass');
         this.urlInput = document.querySelector('#tt_url');
         this.statusMsg = document.querySelector('#status');
-        this.storage = chrome.storage.local;
+        this.storage = browserCompat.storage.local;
 
         document.querySelector('#save').addEventListener('click', function () {
-            that.save()
+            that.save().then(function () {}).catch(e => console.log(e));
         });
         this.load();
     };
@@ -57,10 +57,10 @@ let TTSettings = (function() {
         }
 
         for (let i = 0, j = planets.length; i < j; i++) {
-            template.querySelector('.name').innerHTML = planets[i].name;
-            template.querySelector('.galaxy').innerHTML = planets[i].galaxy;
-            template.querySelector('.system').innerHTML = planets[i].system;
-            template.querySelector('.position').innerHTML = planets[i].position;
+            template.querySelector('.name').appendChild(document.createTextNode(planets[i].name));
+            template.querySelector('.galaxy').appendChild(document.createTextNode(planets[i].galaxy));
+            template.querySelector('.system').appendChild(document.createTextNode(planets[i].system));
+            template.querySelector('.position').appendChild(document.createTextNode(planets[i].position));
 
             let cloned = document.importNode(template, true);
             target.appendChild(cloned);
@@ -83,7 +83,6 @@ let TTSettings = (function() {
             that.load();
             that.status("Settings saved.", ['success'])
         });
-
     };
 
     TTSettings.prototype.status = function (statusText, classes) {
@@ -97,7 +96,10 @@ let TTSettings = (function() {
             this.statusMsg.classList.add(classes[i]);
         }
 
-        this.statusMsg.innerHTML = statusText;
+        while (0 < this.statusMsg.childNodes.length) {
+            this.statusMsg.removeChild(this.statusMsg.firstChild);
+        }
+        this.statusMsg.appendChild(document.createTextNode(statusText));
     };
 
     TTSettings.prototype.createHash = async function (str) {
@@ -117,10 +119,10 @@ window.onload = () => {
     sett.init();
     let title = chrome.i18n.getMessage('AppName') + ' - ' + chrome.i18n.getMessage('TitleOptions');
 
-    document.querySelector('title').innerHTML = title;
-    document.querySelector('#tt_title').innerHTML = title;
-    document.querySelector('#tt_url_label').innerHTML = chrome.i18n.getMessage('LabelURL') + ':';
-    document.querySelector('#tt_user_label').innerHTML = chrome.i18n.getMessage('LabelUsername') + ':';
-    document.querySelector('#tt_pass_label').innerHTML = chrome.i18n.getMessage('LabelPassword') + ':';
-    document.querySelector('#save').innerHTML = chrome.i18n.getMessage('LabelSave');
+    document.querySelector('title').appendChild(document.createTextNode(title));
+    document.querySelector('#tt_title').appendChild(document.createTextNode(title));
+    document.querySelector('#tt_url_label').appendChild(document.createTextNode(chrome.i18n.getMessage('LabelURL') + ':'));
+    document.querySelector('#tt_user_label').appendChild(document.createTextNode(chrome.i18n.getMessage('LabelUsername') + ':'));
+    document.querySelector('#tt_pass_label').appendChild(document.createTextNode(chrome.i18n.getMessage('LabelPassword') + ':'));
+    document.querySelector('#save').appendChild(document.createTextNode(chrome.i18n.getMessage('LabelSave')));
 };

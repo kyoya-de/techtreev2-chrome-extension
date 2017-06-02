@@ -1,8 +1,6 @@
 (function (chromeRuntime, chromeI18n) {
     const sendTechs = function (techs) {
-        chromeRuntime.sendMessage(techs, function (response) {
-            console.log(response);
-        });
+        chromeRuntime.sendMessage(techs).then(r => console.log(r)).catch(e => console.log(e));
     };
     const categories = {
         1: "building",
@@ -21,7 +19,11 @@
     targetRow.classList.add('.tt-button');
 
     uploadButton.classList.add('tt-upload-button');
-    uploadButton.innerHTML = '<span>' + chromeI18n.getMessage('LabelUploadToTree') + '</span>';
+    uploadButton.appendChild(
+        document.createElement('span').appendChild(
+            document.createTextNode(chromeI18n.getMessage('LabelUploadToTree'))
+        )
+    );
     uploadButton.addEventListener('click', function () {
 
         let select = document.querySelector('select.Stat_SelectBox'),

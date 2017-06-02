@@ -56,21 +56,28 @@ TTUpload.prototype.loadPlanets = function () {
 
 TTUpload.prototype.renderPlanets = function (planets) {
     "use strict";
-    let planetSelect = document.querySelector('#planetSelect');
+    let planetSelect = document.querySelector('#planetSelect'),
+        options = planetSelect.querySelectorAll('option:not([value="-"])');
+
+    for (let i = 0, j = options.length; i < j; i++) {
+        planetSelect.removeChild(options[i]);
+    }
 
     for (let i = 0, j = planets.length; i < j; i++) {
         let planetOption = document.createElement('option');
         planetOption.value = planets[i].id;
-        planetOption.innerHTML = planets[i].galaxy + ":" + planets[i].system + ":" + planets[i].position + " - " + planets[i].name;
+        planetOption.appendChild(
+            document.createTextNode(
+                planets[i].galaxy + ":" + planets[i].system + ":" + planets[i].position + " - " + planets[i].name
+            )
+        );
 
         planetSelect.appendChild(planetOption);
     }
 };
 
 let ttUploader = new TTUpload();
-if (!window.browser && window.chrome) {
-    window.browser = window.chrome;
-}
+
 document.addEventListener('DOMContentLoaded', function () {
     "use strict";
         ttUploader.loadPlanets();
