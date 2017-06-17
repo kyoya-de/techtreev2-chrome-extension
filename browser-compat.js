@@ -39,6 +39,21 @@ let StorageWrapper = (function () {
 
     return StorageWrapper;
 })();
+
+let RuntimeWrapper = (function () {
+    "use strict";
+    function RuntimeWrapper(runtime)
+    {
+        this.runtime = runtime;
+    }
+
+    RuntimeWrapper.prototype.sendMessage = function(message, callback) {
+        this.runtime.sendMessage(message).then(callback).catch(e => console.error(e));
+    };
+
+    return RuntimeWrapper;
+})();
+
 let BrowserCompat = (function() {
     "use strict";
     const MODE_CHROME = 'chrome';
@@ -51,6 +66,7 @@ let BrowserCompat = (function() {
         this.browser = (this.compatMode === MODE_FIREFOX) ? window.browser : window.chrome;
         this.tabs = this.browser.tabs;
         this.storage = this.browser.storage;
+        this.runtime = this.browser.runtime;
 
         if (MODE_FIREFOX === this.compatMode) {
             this.browser = window.browser;
@@ -60,6 +76,7 @@ let BrowserCompat = (function() {
                 "managed": new StorageWrapper(this.browser.storage.managed),
                 "sync": new StorageWrapper(this.browser.storage.sync)
             };
+            this.runtime = new RuntimeWrapper(this.browser.runtime);
         }
     }
 

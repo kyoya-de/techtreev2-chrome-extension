@@ -11,6 +11,5 @@ chrome.tabs.onUpdated.addListener(function(tabId, changeInfo, tab) {
 });
 chrome.runtime.onMessage.addListener(function (message, sender, sendResponse) {
     "use strict";
-    console.log(message);
-    return false;
+    sendResponse(message);
 });

@@ -1,6 +1,6 @@
-(function (chromeRuntime, chromeI18n) {
+(function () {
     const sendTechs = function (techs) {
-        chromeRuntime.sendMessage(techs).then(r => console.log(r)).catch(e => console.log(e));
+        browserCompat.runtime.sendMessage(techs, r => console.log(r));
     };
     const categories = {
         1: "building",
@@ -21,7 +21,7 @@
     uploadButton.classList.add('tt-upload-button');
     uploadButton.appendChild(
         document.createElement('span').appendChild(
-            document.createTextNode(chromeI18n.getMessage('LabelUploadToTree'))
+            document.createTextNode(chrome.i18n.getMessage('LabelUploadToTree'))
         )
     );
     uploadButton.addEventListener('click', function () {
@@ -58,4 +58,4 @@
     targetCell.appendChild(uploadButton);
     targetRow.appendChild(targetCell);
     target.appendChild(targetRow);
-})(chrome.runtime, chrome.i18n);
+})();

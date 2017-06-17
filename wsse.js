@@ -29,7 +29,6 @@
  * Configurable variables. You may need to tweak these to be compatible with
  * the server-side, but the defaults work in most cases.
  */
-let hexcase = 0;
 /* hex output format. 0 - lowercase; 1 - uppercase        */
 let b64pad = "=";
 /* base-64 pad character. "=" for strict RFC compliance   */
@@ -40,23 +39,8 @@ let chrsz = 8;
  * These are the functions you'll usually want to call
  * They take string arguments and return either hex or base-64 encoded strings
  */
-function hex_sha1(s) {
-    return binb2hex(core_sha1(str2binb(s), s.length * chrsz));
-}
 function b64_sha1(s) {
     return binb2b64(core_sha1(str2binb(s), s.length * chrsz));
-}
-function str_sha1(s) {
-    return binb2str(core_sha1(str2binb(s), s.length * chrsz));
-}
-function hex_hmac_sha1(key, data) {
-    return binb2hex(core_hmac_sha1(key, data));
-}
-function b64_hmac_sha1(key, data) {
-    return binb2b64(core_hmac_sha1(key, data));
-}
-function str_hmac_sha1(key, data) {
-    return binb2str(core_hmac_sha1(key, data));
 }
 
 /*
@@ -99,7 +83,7 @@ function core_sha1(x, len) {
         d = safe_add(d, oldd);
         e = safe_add(e, olde);
     }
-    return Array(a, b, c, d, e);
+    return [a, b, c, d, e];
 
 }
 
@@ -120,23 +104,6 @@ function sha1_ft(t, b, c, d) {
 function sha1_kt(t) {
     return (t < 20) ? 1518500249 : (t < 40) ? 1859775393 :
         (t < 60) ? -1894007588 : -899497514;
-}
-
-/*
- * Calculate the HMAC-SHA1 of a key and some data
- */
-function core_hmac_sha1(key, data) {
-    let bkey = str2binb(key);
-    if (bkey.length > 16) bkey = core_sha1(bkey, key.length * chrsz);
-
-    let ipad = Array(16), opad = Array(16);
-    for (let i = 0; i < 16; i++) {
-        ipad[i] = bkey[i] ^ 0x36363636;
-        opad[i] = bkey[i] ^ 0x5C5C5C5C;
-    }
-
-    let hash = core_sha1(ipad.concat(str2binb(data)), 512 + data.length * chrsz);
-    return core_sha1(opad.concat(hash), 512 + 160);
 }
 
 /*
@@ -161,35 +128,11 @@ function rol(num, cnt) {
  * In 8-bit function, characters >255 have their hi-byte silently ignored.
  */
 function str2binb(str) {
-    let bin = Array();
+    let bin = [];
     let mask = (1 << chrsz) - 1;
     for (let i = 0; i < str.length * chrsz; i += chrsz)
         bin[i >> 5] |= (str.charCodeAt(i / chrsz) & mask) << (32 - chrsz - i % 32);
     return bin;
-}
-
-/*
- * Convert an array of big-endian words to a string
- */
-function binb2str(bin) {
-    let str = "";
-    let mask = (1 << chrsz) - 1;
-    for (let i = 0; i < bin.length * 32; i += chrsz)
-        str += String.fromCharCode((bin[i >> 5] >>> (32 - chrsz - i % 32)) & mask);
-    return str;
-}
-
-/*
- * Convert an array of big-endian words to a hex string.
- */
-function binb2hex(binarray) {
-    let hex_tab = hexcase ? "0123456789ABCDEF" : "0123456789abcdef";
-    let str = "";
-    for (let i = 0; i < binarray.length * 4; i++) {
-        str += hex_tab.charAt((binarray[i >> 2] >> ((3 - i % 4) * 8 + 4)) & 0xF) +
-            hex_tab.charAt((binarray[i >> 2] >> ((3 - i % 4) * 8  )) & 0xF);
-    }
-    return str;
 }
 
 /*
@@ -284,52 +227,25 @@ function encode64(input) {
 //
 function isodatetime() {
     let today = new Date();
-    let year = today.getYear();
-    if (year < 2000)    // Y2K Fix, Isaac Powell
-        year = year + 1900; // http://onyx.idbsu.edu/~ipowell
-    let month = today.getMonth() + 1;
-    let day = today.getDate();
-    let hour = today.getHours();
-    let hourUTC = today.getUTCHours();
-    let diff = hour - hourUTC;
-    let hourdifference = Math.abs(diff);
-    let minute = today.getMinutes();
-    let minuteUTC = today.getUTCMinutes();
-    let minutedifference;
-    let second = today.getSeconds();
-    let timezone;
-    if (minute != minuteUTC && minuteUTC < 30 && diff < 0) {
-        hourdifference--;
-    }
-    if (minute != minuteUTC && minuteUTC > 30 && diff > 0) {
-        hourdifference--;
-    }
-    if (minute != minuteUTC) {
-        minutedifference = ":30";
-    }
-    else {
-        minutedifference = ":00";
-    }
-    if (hourdifference < 10) {
-        timezone = "0" + hourdifference + minutedifference;
-    }
-    else {
-        timezone = "" + hourdifference + minutedifference;
-    }
-    if (diff < 0) {
-        timezone = "-" + timezone;
-    }
-    else {
-        timezone = "+" + timezone;
-    }
-    if (month <= 9) month = "0" + month;
-    if (day <= 9) day = "0" + day;
-    if (hour <= 9) hour = "0" + hour;
-    if (minute <= 9) minute = "0" + minute;
-    if (second <= 9) second = "0" + second;
-    time = year + "-" + month + "-" + day + "T"
-        + hour + ":" + minute + ":" + second + timezone;
-    return time;
+    let year = today.getFullYear(),
+        month = '00' + (today.getMonth() + 1),
+        day = '00' + today.getDate(),
+        hour = '00' + today.getHours(),
+        minute = '00' + today.getMinutes(),
+        second = '00' + today.getSeconds(),
+        offsetModifier = (today.getTimezoneOffset()) < 0 ? '+' : '-',
+        offsetHour = '00' + Math.abs(Math.floor(today.getTimezoneOffset() / 60)),
+        offsetMinute = '00' + (today.getTimezoneOffset() % 60);
+
+    return year + "-" +
+        month.slice(-2, month.length) + "-" +
+        day.slice(-2, day.length) + "T" +
+        hour.slice(-2, hour.length) + ":" +
+        minute.slice(-2, minute.length) + ":" +
+        second.slice(-2, second.length) +
+        offsetModifier +
+        offsetHour.slice(-2, offsetHour.length) + ':' +
+        offsetMinute.slice(-2, offsetMinute.length);
 }
 
 // (C) 2005 Victor R. Ruiz <victor*sixapart.com>
@@ -352,7 +268,7 @@ function wsse(Password) {
     let r = [];
 
     Nonce = b64_sha1(isodatetime() + 'There is more than words');
-    nonceEncoded = encode64(Nonce);
+    let nonceEncoded = encode64(Nonce);
     Created = isodatetime();
     PasswordDigest = b64_sha1(Nonce + Created + Password);
 

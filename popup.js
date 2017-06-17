@@ -22,7 +22,7 @@ TTUpload.prototype.upload = function (content) {
             path = '/user/planet'
         }
 
-        xhr.open('POST', items.url.replace(/\/*$/, '') + path + '?XDEBUG_SESSION_START=PHPSTORM');
+        xhr.open('POST', items.url.replace(/\/*$/, '') + path);
         xhr.setRequestHeader("X-WSSE", header);
         xhr.setRequestHeader('Content-Type', 'application/json');
         xhr.addEventListener('load', () => {
@@ -81,6 +81,26 @@ let ttUploader = new TTUpload();
 document.addEventListener('DOMContentLoaded', function () {
     "use strict";
         ttUploader.loadPlanets();
+
+    browserCompat.tabs.query({active: true, currentWindow: true}, function(tabs) {
+        "use strict";
+        let tabUrl = new URL(tabs[0].url),
+            searchParams = new URLSearchParams(tabUrl.search.slice(1)),
+            cmd = searchParams.get('cmd'),
+            planetSelect = [
+                document.querySelector('.planet-select'),
+                document.querySelector('#refresh')
+            ],
+            toggleMethod = 'remove';
+
+        if ('start' === cmd) {
+            toggleMethod = 'add';
+        }
+
+        for (let i = 0, planetSel; planetSel = planetSelect[i]; i++) {
+            planetSel.classList[toggleMethod]('hidden');
+        }
+    });
 
     document.querySelector('#upload').addEventListener('click', function() {
         "use strict";

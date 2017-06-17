@@ -46,6 +46,7 @@
       ],
       "all_frames": true,
       "js": [
+        "browser-compat.js",
         "content_check.js"
       ],
       "css": [
