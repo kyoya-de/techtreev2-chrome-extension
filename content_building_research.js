@@ -1,5 +1,7 @@
 (function () {
-    chrome.runtime.onMessage.addListener(function (message, sender, sendResponse) {
+    let fetchTechs = function () {
+        "use strict";
+
         const typeMap = {
             "building":"building",
             "research":"science"
@@ -28,6 +30,27 @@
             output.levels[levelKeys[k]] = levels[levelKeys[k]];
         }
 
-        sendResponse(output);
+        return output;
+    },
+    fetchSelectedPlanetName = function () {
+        "use strict";
+        let planetBox = document.querySelector('.PlanetSelectBox'),
+            options = planetBox.querySelectorAll('option');
+
+        return options[planetBox.selectedIndex].firstChild.nodeValue;
+    };
+
+    chrome.runtime.onMessage.addListener(function (message, sender, sendResponse) {
+        let result;
+
+        if ('get-techs' === message.command) {
+            result = fetchTechs();
+        }
+
+        if ('get-selected-planet' === message.command) {
+            result = fetchSelectedPlanetName();
+        }
+
+        sendResponse(result);
     });
 })();

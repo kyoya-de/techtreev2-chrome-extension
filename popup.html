@@ -3,23 +3,35 @@
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
+    <link href="http://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <link rel="stylesheet" type="text/css" href="popup.css">
 </head>
 <body>
+<script type="text/javascript" src="js/jquery-2.1.1.min.js"></script>
 <script src="browser-compat.js"></script>
 <script src="wsse.js"></script>
 <script src="popup.js"></script>
-<div class="app-icon">
-    <img src="icon_active/res/mipmap-hdpi/icon_active.png">
-</div>
-<div class="planet-select">
-    <select id="planetSelect">
-        <option value="-">Planet auswählen</option>
-    </select>
-</div>
-<div class="upload-button">
-    <button id="refresh">&#10227;</button>
-    <button id="upload">Upload</button>
+<script src="js/bin/materialize.min.js"></script>
+
+<div class="popup">
+    <div class="popup-title">
+        <div clasS="popup-title-image"><img src="icon_active/res/mipmap-mdpi/icon_active.png"></div>
+        <div class="popup-title-app-name"><h6>Horiversum TechTree Upload Helper</h6></div>
+    </div>
+    <div class="popup-planet">
+        <div class="popup-planet-select">
+            <select id="planetSelect">
+                <option value="-">Planet auswählen</option>
+            </select>
+        </div>
+        <div class="popup-planet-refresh">
+            <button id="refresh" class="btn-floating waves-effect light-green darken-1"><i class="material-icons">refresh</i></button>
+        </div>
+    </div>
+    <div class="popup-result"></div>
+    <div class="popup-upload">
+        <button id="upload" class="btn light-green darken-1">Upload</button>
+    </div>
 </div>
 </body>
 </html>

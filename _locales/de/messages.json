@@ -12,7 +12,7 @@
     "message": "Benutzername"
   },
   "LabelPassword": {
-    "message": "Passwort"
+    "message": "API-Key"
   },
   "LabelSave": {
     "message": "Speichern"
