@@ -13,7 +13,7 @@
   ],
   "background": {
     "scripts": [
-      "background.js"
+      "lib/background.js"
     ]
   },
   "content_scripts": [
@@ -22,10 +22,10 @@
         "http://horiversum.org/game/main/main.php?*cmd=start*"
       ],
       "js": [
-        "content_planets.js"
+        "lib/content_planets.js"
       ],
       "css": [
-        "content.css"
+        "styles/content.css"
       ]
     },
     {
@@ -34,10 +34,10 @@
         "http://horiversum.org/game/main/main.php?*cmd=research*"
       ],
       "js": [
-        "content_building_research.js"
+        "lib/content_building_research.js"
       ],
       "css": [
-        "content.css"
+        "styles/content.css"
       ]
     },
     {
@@ -46,11 +46,11 @@
       ],
       "all_frames": true,
       "js": [
-        "browser-compat.js",
-        "content_check.js"
+        "lib/browser-compat.js",
+        "lib/content_check.js"
       ],
       "css": [
-        "content.css"
+        "styles/content.css"
       ]
     }
   ],
