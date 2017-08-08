@@ -13,6 +13,8 @@
   ],
   "background": {
     "scripts": [
+      "lib/browser-compat.js",
+      "lib/wsse.js",
       "lib/background.js"
     ]
   },
@@ -35,9 +37,6 @@
       ],
       "js": [
         "lib/content_building_research.js"
-      ],
-      "css": [
-        "styles/content.css"
       ]
     },
     {

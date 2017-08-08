@@ -31,7 +31,30 @@
 }
 
 .Stat_Check_Table .tt-upload-button {
-    transform: rotate(0);
     top: -25px;
     right: -2px;
+}
+
+.tt-upload-status {
+    position: fixed;
+    top: 10px;
+    right: 25px;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+}
+.tt-upload-status.working {
+    background-color: #FF0;
+    box-shadow: 0 0 5px 5px #ff0;
+    border: 1px solid #fe0;
+}
+.tt-upload-status.ready {
+    background-color: #0F0;
+    box-shadow: 0 0 5px 5px #0f0;
+    border: 1px solid #0e0;
+}
+.tt-upload-status.error {
+    background-color: #F00;
+    box-shadow: 0 0 5px 5px #f00;
+    border: 1px solid #e00;
 }
